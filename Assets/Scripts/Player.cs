@@ -1,0 +1,73 @@
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class Player : MonoBehaviour
+{
+
+    public Rigidbody Playerbody;
+    public float Playerspeed = 10f;
+    public Transform cameratransform;
+    public InputActionReference moveAction;
+    public InputActionReference jumpAction;
+    public float jumpForce = 8f;
+    public bool isGrounded;
+    public LayerMask groundLayer;
+    public float groundCheckDistance = 1.1f;
+
+    void OnEnable()
+    {
+        moveAction.action.Enable();
+        jumpAction.action.Enable();
+    }
+
+    void OnDisable()
+    {
+        moveAction.action.Disable();
+        jumpAction.action.Disable();
+    }
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    void Update()
+    {
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer);
+
+        if (jumpAction.action.WasPressedThisFrame() && isGrounded)
+        {
+            jump();
+        }
+    }
+    void jump()
+    {
+        Playerbody.linearVelocity = new Vector3(Playerbody.linearVelocity.x, jumpForce, Playerbody.linearVelocity.z);
+        isGrounded = false;
+    }
+    void FixedUpdate()
+    {
+        Vector2 moveInput = moveAction.action.ReadValue<Vector2>();
+
+        float x = moveInput.x;
+        float z = moveInput.y;
+        // Find out what direction the camera is facing either in the z,x and whats to the right of the camera either x,z
+        Vector3 cameraForward = cameratransform.forward; 
+        Vector3 cameraRight = cameratransform.right;
+        // Makes it so camera ignores y axis
+        cameraForward.y = 0;
+        cameraRight.y = 0;
+        // makes it so diagonal movement doesn't increase your speed.
+        cameraForward = cameraForward.normalized;
+        cameraRight = cameraRight.normalized;
+
+        //Multiplies input by the vector3 z and x of the camera.
+        Vector3 direction =
+            (cameraForward * z + cameraRight * x).normalized;
+        //this actually makes the player move.
+        Playerbody.linearVelocity = new Vector3
+            (direction.x * Playerspeed,Playerbody.linearVelocity.y,direction.z * Playerspeed);
+    }
+
+}
