@@ -31,10 +31,19 @@ public class Player : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
+    void RotatePlayer()
+    {
+        Vector3 cameraForward = cameratransform.forward;
+
+        cameraForward.y = 0;
+
+        transform.rotation = Quaternion.LookRotation(cameraForward);
+    }
 
     void Update()
     {
         isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer);
+        RotatePlayer();
 
         if (jumpAction.action.WasPressedThisFrame() && isGrounded)
         {
