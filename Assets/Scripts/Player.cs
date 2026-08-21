@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     public bool isGrounded;
     public LayerMask groundLayer;
     public float groundCheckDistance = 1.1f;
+    public bool canMove = true;
 
     void OnEnable()
     {
@@ -57,6 +58,10 @@ public class Player : MonoBehaviour
     }
     void FixedUpdate()
     {
+        if (!canMove)
+        {
+            return;
+        }
         Vector2 moveInput = moveAction.action.ReadValue<Vector2>();
 
         float x = moveInput.x;
@@ -76,7 +81,8 @@ public class Player : MonoBehaviour
             (cameraForward * z + cameraRight * x).normalized;
         //this actually makes the player move.
         Playerbody.linearVelocity = new Vector3
-            (direction.x * Playerspeed,Playerbody.linearVelocity.y,direction.z * Playerspeed);
+        (direction.x * Playerspeed,Playerbody.linearVelocity.y,direction.z * Playerspeed);
+        
     }
 
 }

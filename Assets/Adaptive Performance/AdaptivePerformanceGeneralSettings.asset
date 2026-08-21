@@ -30,7 +30,7 @@ MonoBehaviour:
   Keys: 01000000
   Values:
   - {fileID: -3119886018079644488}
-  m_EnableAdaptivePerformance: 1
+  m_EnableAdaptivePerformance: 0
   m_Version: 6000.3
 --- !u!114 &5236633875123739857
 MonoBehaviour:
