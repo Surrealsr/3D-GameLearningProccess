@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     public LayerMask groundLayer;
     public float groundCheckDistance = 1.1f;
     public bool canMove = true;
+    public float gravityMultiplier = 1.5f;
 
     void OnEnable()
     {
@@ -58,10 +59,14 @@ public class Player : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (!canMove)
+        
+        
+        if (!canMove || !isGrounded)
         {
             return;
         }
+
+        Playerbody.AddForce(Physics.gravity * gravityMultiplier, ForceMode.Acceleration);
         Vector2 moveInput = moveAction.action.ReadValue<Vector2>();
 
         float x = moveInput.x;

@@ -1,12 +1,19 @@
 using UnityEngine;
 
-public class Chest : MonoBehaviour
+public class Chest : MonoBehaviour, IInteractable
 {
     public Transform lidPivot;
     public float openAngle = 240f;
     private bool isOpen = false;
-
-    public void ToggleChest()
+    public float interactRange = 2f;
+    
+    
+    public float InteractRange
+    {
+        get { return interactRange; }
+    }
+    
+    public void Interact()
     {
         if (isOpen)
         {

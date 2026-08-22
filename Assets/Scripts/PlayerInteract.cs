@@ -1,20 +1,26 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInteract : MonoBehaviour
+public class Interactor : MonoBehaviour
 {
-    public Transform cameraTransform;
+    public Transform InteractorSource;
+    public float maxInteractRange = 10f;
     public InputActionReference interactAction;
-    public float interactDistance = 3f;
+    public InputActionReference detachAction;
+    private Handholds currentHandhold;
+
 
     void OnEnable()
     {
         interactAction.action.Enable();
+        detachAction.action.Enable();
     }
+
 
     void OnDisable()
     {
         interactAction.action.Disable();
+        detachAction.action.Disable();
     }
 
     void Update()
@@ -23,19 +29,33 @@ public class PlayerInteract : MonoBehaviour
         {
             Interact();
         }
+
+
+        if (currentHandhold != null && currentHandhold.playerattached && detachAction.action.WasPressedThisFrame())
+        {
+            currentHandhold.DetachPlayer();
+            currentHandhold = null;
+        }
     }
 
     void Interact()
     {
-        RaycastHit hit;
+        Ray r = new Ray(InteractorSource.position,InteractorSource.forward);
 
-        if (Physics.Raycast(cameraTransform.position,cameraTransform.forward,out hit,interactDistance))
+        if (Physics.Raycast(r, out RaycastHit hitInfo, maxInteractRange))
         {
-            Chest chest = hit.collider.GetComponentInParent<Chest>();
-
-            if (chest != null)
+            IInteractable interactObj = hitInfo.collider.GetComponentInParent<IInteractable>();
+            
+            if (interactObj != null && hitInfo.distance <= interactObj.InteractRange)
             {
-                chest.ToggleChest();
+                interactObj.Interact();
+
+                Handholds handhold = hitInfo.collider.GetComponentInParent<Handholds>();
+
+                if (handhold != null && handhold.playerattached)
+                {
+                    currentHandhold = handhold;
+                }
             }
         }
     }

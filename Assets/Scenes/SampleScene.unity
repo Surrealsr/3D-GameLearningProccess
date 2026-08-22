@@ -478,6 +478,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1924978566}
     - target: {fileID: 5655812340294944445, guid: 262b99d610773574c89ff43dd462b966, type: 3}
+      propertyPath: detachAction
+      value: 
+      objectReference: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    - target: {fileID: 5655812340294944445, guid: 262b99d610773574c89ff43dd462b966, type: 3}
+      propertyPath: interactRange
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5655812340294944445, guid: 262b99d610773574c89ff43dd462b966, type: 3}
       propertyPath: playerMovement
       value: 
       objectReference: {fileID: 1924978571}
@@ -708,8 +716,8 @@ GameObject:
   - component: {fileID: 1924978568}
   - component: {fileID: 1924978567}
   - component: {fileID: 1924978566}
-  - component: {fileID: 1924978571}
   - component: {fileID: 1924978572}
+  - component: {fileID: 1924978571}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -751,7 +759,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1924978565}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 5c2010ddc5d81e449b0891fb31acd57b, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -853,17 +861,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   Playerbody: {fileID: 1924978566}
-  Playerspeed: 10
+  Playerspeed: 6
   cameratransform: {fileID: 920442426}
   moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   jumpAction: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  jumpForce: 4
+  jumpForce: 8
   isGrounded: 0
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
   groundCheckDistance: 1.1
   canMove: 1
+  gravityMultiplier: 1.5
 --- !u!114 &1924978572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -875,10 +884,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6cac41e8acd702438cba33cb974bf52, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
-  cameraTransform: {fileID: 920442426}
+  m_EditorClassIdentifier: Assembly-CSharp::Interactor
+  InteractorSource: {fileID: 920442426}
+  maxInteractRange: 10
   interactAction: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  interactDistance: 3
+  detachAction: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!1001 &1974767227
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -934,11 +944,19 @@ PrefabInstance:
     - target: {fileID: 5655812340294944445, guid: 262b99d610773574c89ff43dd462b966, type: 3}
       propertyPath: moveAction
       value: 
-      objectReference: {fileID: -5630151704836100654, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+      objectReference: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     - target: {fileID: 5655812340294944445, guid: 262b99d610773574c89ff43dd462b966, type: 3}
       propertyPath: playerbody
       value: 
       objectReference: {fileID: 1924978566}
+    - target: {fileID: 5655812340294944445, guid: 262b99d610773574c89ff43dd462b966, type: 3}
+      propertyPath: detachAction
+      value: 
+      objectReference: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    - target: {fileID: 5655812340294944445, guid: 262b99d610773574c89ff43dd462b966, type: 3}
+      propertyPath: interactRange
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5655812340294944445, guid: 262b99d610773574c89ff43dd462b966, type: 3}
       propertyPath: playerMovement
       value: 
@@ -1180,6 +1198,10 @@ PrefabInstance:
       value: 240
       objectReference: {fileID: 0}
     - target: {fileID: 9183897160695794996, guid: 46ff0997cc5e02e42874d2d7fb3fef25, type: 3}
+      propertyPath: interactRange
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9183897160695794996, guid: 46ff0997cc5e02e42874d2d7fb3fef25, type: 3}
       propertyPath: timeRemaining
       value: 5
       objectReference: {fileID: 0}
@@ -1310,10 +1332,10 @@ SceneRoots:
   m_Roots:
   - {fileID: 410087041}
   - {fileID: 1986999869}
-  - {fileID: 920442426}
   - {fileID: 1924978570}
   - {fileID: 309555584}
   - {fileID: 2126093244}
   - {fileID: 2123439637}
   - {fileID: 837137789}
   - {fileID: 1974767227}
+  - {fileID: 920442426}
